@@ -39,20 +39,19 @@ jQuery(function($) {'use strict',
 	});
 
 	// Contact form
-	var form = $('#main-contact-form');
-	form.submit(function(event){
-		event.preventDefault();
-		var form_status = $('<div class="form_status"></div>');
-		$.ajax({
-			url: $(this).attr('action'),
+	jQuery(function($) {'use strict',
 
-			beforeSend: function(){
-				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
-			}
-		}).done(function(data){
-			form_status.html('<p class="text-success">' + data.message + '</p>').delay(3000).fadeOut();
-		});
-	});
+$('.contact-form').submit(function () {'use strict',
+$this = $(this);
+$.post("sendemail.php", $(".contact-form").serialize(),function(result){
+if(result.type == 'success'){
+$this.prev().text(result.message).fadeIn().delay(3000).fadeOut();
+}
+});
+return false;
+});
+
+});
 
 	
 	//goto top
