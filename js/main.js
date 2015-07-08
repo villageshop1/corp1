@@ -39,20 +39,22 @@ jQuery(function($) {'use strict',
 	});
 
 	// Contact form
-	jQuery(function($) {'use strict',
+	var form = $('#main-contact-form');
+	form.submit(function(event){
+		event.preventDefault();
+		var form_status = $('<div class="form_status"></div>');
+		$.ajax({
+			url: $(this).attr('action'),
 
-$('.contact-form').submit(function () {'use strict',
-$this = $(this);
-$.post("sendemail.php", $(".contact-form").serialize(),function(result){
-if(result.type == 'success'){
-$this.prev().text(result.message).fadeIn().delay(3000).fadeOut();
-}
-});
-return false;
-});
+			beforeSend: function(){
+				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
+			}
+		}).done(function(data){
+			form_status.html('<p class="text-success">' + data.message + '</p>').delay(3000).fadeOut();
+		});
+	});
 
-})
-
+	
 	//goto top
 	$('.gototop').click(function(event) {
 		event.preventDefault();
